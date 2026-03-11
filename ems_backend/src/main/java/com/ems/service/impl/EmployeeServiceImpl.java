@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.ems.dto.EmployeeDto;
 import com.ems.entity.Employee;
+import com.ems.exception.ResourceNotFoundException;
 import com.ems.mapper.EmployeeMapper;
 import com.ems.repositry.EmployeeRepository;
 import com.ems.service.EmployeeService;
@@ -24,6 +25,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		
 		return EmployeeMapper.mapEmployeeDto(saveEmployee);
+	}
+
+	@Override
+	public EmployeeDto getEmployeeById(Long empId) {
+		Employee employee = employeeRepository.findById(empId)
+				.orElseThrow(()-> new ResourceNotFoundException("Employee is not exists with given ID: "+ empId));
+		return EmployeeMapper.mapEmployeeDto(employee);
 	}
 
 }
