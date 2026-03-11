@@ -1,5 +1,8 @@
 package com.ems.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.ems.dto.EmployeeDto;
@@ -32,6 +35,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee employee = employeeRepository.findById(empId)
 				.orElseThrow(()-> new ResourceNotFoundException("Employee is not exists with given ID: "+ empId));
 		return EmployeeMapper.mapEmployeeDto(employee);
+	}
+
+	@Override
+	public List<EmployeeDto> getAllEmployees() {
+		List<Employee> employees = employeeRepository.findAll();
+		
+		return employees.stream()
+				.map((employee) -> EmployeeMapper.mapEmployeeDto(employee))
+				.collect(Collectors.toList());
 	}
 
 }

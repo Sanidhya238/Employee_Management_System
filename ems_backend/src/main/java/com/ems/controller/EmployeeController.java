@@ -1,5 +1,7 @@
 package com.ems.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +38,13 @@ public class EmployeeController {
 	public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable("id") Long empId){
 		EmployeeDto employeeDto = employeeService.getEmployeeById(empId);
 		return ResponseEntity.ok(employeeDto);
+	}
+	
+	//Build GET All API
+	@GetMapping
+	public ResponseEntity<List<EmployeeDto>> getAllEmployees(){
+		List<EmployeeDto> employees = employeeService.getAllEmployees();
+		return ResponseEntity.ok(employees);
 	}
 
 }
